@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Clube da Arquitetura Computacional</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<button class="som" id="btnSom" onclick="alternarSom()">🔊</button>
+
+<!-- TELA 1: MESA COM O MONITOR DE TUBO (a cena tem tamanho fixo e o JS ajusta o zoom) -->
+<div class="mesa" id="mesa">
+<div class="cena" id="cena">
+  <div class="nota" id="dica">Aperte o botão redondo do monitor para ligar ▶</div>
+  <div class="tampo"></div>
+
+  <!-- objetos da mesa, em tamanho proporcional ao monitor -->
+  <div class="lata"></div>
+  <div class="ram"><span></span><span></span><span></span><span></span></div>
+  <div class="caixa"><div class="pizza"></div></div>
+  <div class="basem"></div>
+
+  <div class="monitor">
+    <div class="moldura">
+      <div class="tela" id="tela">
+        <div class="area bliss" id="area">
+          <div class="ie">
+            <div class="titulo"><span><b class="ico">e</b> Clube da Arquitetura - Microsoft Internet Explorer</span><span class="tb"><i>_</i><i>▢</i><i class="x">×</i></span></div>
+            <div class="menu">Arquivo&nbsp;&nbsp;Editar&nbsp;&nbsp;Exibir&nbsp;&nbsp;Favoritos&nbsp;&nbsp;Ajuda</div>
+            <div class="end"><span>Endereço</span><b>http://www.clube-arquitetura.com/jogos</b><em>Ir</em></div>
+            <div class="pagina">
+              <i class="monte"></i><i class="monte m2"></i><i class="neve"></i>
+              <h2 class="logo">Clube da Arquitetura</h2>
+              <p class="sub">Escolha um jogo para começar</p>
+              <div class="botoes">
+                <button class="btcp" onclick="abrir('cruz')">Cruzadinha</button>
+                <button class="btcp" onclick="abrir('jogo')">Caça-Respostas</button>
+              </div>
+              <i class="igloo"></i><i class="pinho"></i><i class="pinho p2"></i>
+              <div class="pg" style="--c:#2c6fd1;left:150px;bottom:22px;font-size:5px"><i class="asa"></i><i class="ol"></i><i class="bico"></i><i class="pe"></i></div>
+              <div class="pg" style="--c:#d32f3a;left:215px;bottom:14px;font-size:4px"><i class="asa"></i><i class="ol"></i><i class="bico"></i><i class="pe"></i></div>
+              <div class="pg" style="--c:#2e9e4f;left:350px;bottom:20px;font-size:5px"><i class="asa"></i><i class="ol"></i><i class="bico"></i><i class="pe"></i></div>
+              <div class="puf" style="--c:#ff9a1f;left:290px;bottom:16px;font-size:5px"></div>
+            </div>
+          </div>
+          <div class="barra"><b class="iniciar">iniciar</b><span class="tarefa">Clube da Arquitetura</span><span class="bandeja" id="relogio">12:00</span></div>
+        </div>
+        <div class="vidro"></div>
+      </div>
+    </div>
+    <div class="queixo"><span>PengTech 17"</span><span class="botoesm"><i class="led"></i><button class="power" onclick="ligar()" title="Ligar"></button></span></div>
+  </div>
+
+  <div class="teclado"></div>
+  <div class="tapete"></div>
+  <div class="mouse"></div>
+  <div class="pg" style="--c:#2c6fd1;left:915px;top:392px;font-size:10px"><i class="asa"></i><i class="ol"></i><i class="bico"></i><i class="pe"></i></div>
+  <div class="pg" style="--c:#d32f3a;left:1018px;top:446px;font-size:7px"><i class="asa"></i><i class="ol"></i><i class="bico"></i><i class="pe"></i></div>
+  <div class="puf" style="--c:#8a4fd6;left:1015px;top:640px;font-size:12px"></div>
+</div>
+</div>
+
+<!-- TELA 2: CRUZADINHA -->
+<div class="janela bliss" id="cruz">
+  <div class="xp">
+    <div class="titulo"><span>Cruzadinha de Arquitetura Computacional</span><span class="tb"><i>_</i><i>▢</i><button class="fechar" onclick="voltar()">×</button></span></div>
+    <div class="corpo">
+      <div class="topo">
+        <button class="botao" onclick="conferir()">Conferir</button>
+        <button class="botao amarelo" onclick="pedirDica()">💡 Dica</button>
+        <button class="botao" onclick="reiniciar()">Reiniciar</button>
+        <b id="contador">0 de 16 palavras</b>
+      </div>
+      <p id="msgCruz">Clique numa casa e digite. Clique numa pista para ir até a palavra. O botão Dica ajuda na palavra onde está o cursor.</p>
+      <div class="lado">
+        <div id="tabuleiro"></div>
+        <div class="pistas">
+          <h3>Horizontais</h3><ul id="listaH"></ul>
+          <h3>Verticais</h3><ul id="listaV"></ul>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="tarefas"><b class="iniciar">iniciar</b><span class="tarefa">Cruzadinha</span></div>
+</div>
+
+<!-- TELA 3: CAÇA-RESPOSTAS (estilo Duck Hunt / Doom) -->
+<div class="janela bliss" id="jogo">
+  <div class="xp">
+    <div class="titulo"><span>Caça-Respostas</span><span class="tb"><i>_</i><i>▢</i><button class="fechar" onclick="voltar()">×</button></span></div>
+    <div class="corpo">
+      <div class="topo"><b id="placar">Acertos: 0</b></div>
+      <div class="palco" id="palco" onmousedown="mirar(event)">
+        <div id="alvos"></div>
+        <svg class="raio" id="raio"><line id="linhaA" stroke="#ff2fd2" stroke-width="8" stroke-linecap="round" opacity=".55"/><line id="linhaB" stroke="#fff" stroke-width="2.5" stroke-linecap="round"/></svg>
+        <div class="flash" id="flash"></div>
+        <div class="arma" id="arma"><i class="braco e"></i><i class="braco d"></i><i class="corpoarma"></i><i class="cano"></i><i class="mao e"></i><i class="mao d"></i><i class="ponta"></i></div>
+      </div>
+      <div class="pergunta" id="pergunta">Atire na resposta certa! Aperte Começar.</div>
+      <button class="botao" id="btnJogo" onclick="comecarJogo()">Começar</button>
+    </div>
+  </div>
+  <div class="tarefas"><b class="iniciar">iniciar</b><span class="tarefa">Caça-Respostas</span></div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
