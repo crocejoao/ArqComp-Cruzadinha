@@ -104,6 +104,11 @@ arqcomp-cruzadinha/
 └── README.md
 ```
 
+### 🎮 [Jogar agora](https://crocejoao.github.io/ArqComp-Cruzadinha/)
+
+
+
+
 ## 💻 Rodar no seu computador
 
 ```
