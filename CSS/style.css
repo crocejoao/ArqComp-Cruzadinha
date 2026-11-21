@@ -1,0 +1,162 @@
+* { box-sizing: border-box; }
+body { margin: 0; background: #141c26; font-family: Tahoma, Verdana, sans-serif; color: #111; }
+button { font-family: inherit; }
+.som { position: fixed; top: 10px; right: 10px; z-index: 60; width: 40px; height: 40px; font-size: 18px; cursor: pointer; border: 2px solid #fff; border-radius: 50%; background: #0a58ea; }
+
+/* ================= MESA (cena de 1100px; o JS ajusta o zoom) ================= */
+.mesa { min-height: 100vh; display: flex; justify-content: center; align-items: flex-start; overflow: hidden; }
+.cena { position: relative; flex: none; width: 1100px; height: 760px;
+  background: radial-gradient(ellipse 55% 45% at 50% 28%, rgba(255,236,190,.22), transparent 70%), linear-gradient(#34495e, #1d2b38 66%); }
+.cena > * { position: absolute; }
+.nota { left: 70px; top: 70px; width: 150px; padding: 14px 12px; background: #fff27a; color: #4a3b00; font: 15px "Comic Sans MS", cursive; transform: rotate(-4deg); box-shadow: 3px 6px 8px rgba(0,0,0,.4); }
+.tampo { left: 0; right: 0; top: 510px; bottom: 0; border-top: 8px solid #a86f3a;
+  background: linear-gradient(rgba(255,255,255,.1), rgba(0,0,0,.45)), repeating-linear-gradient(90deg, #7b4a25 0 5px, #6c4021 5px 8px, #82522b 8px 20px, #744623 20px 23px); }
+.cena > .lata, .cena > .ram, .cena > .caixa, .cena > .pg, .cena > .puf { filter: drop-shadow(0 8px 6px rgba(0,0,0,.5)); }
+
+/* monitor de tubo */
+.basem { left: 360px; top: 552px; width: 380px; height: 36px; border-radius: 10px 10px 50% 50% / 10px 10px 24px 24px; background: linear-gradient(#cfc8b1, #9d967f); box-shadow: 0 14px 16px rgba(0,0,0,.5); }
+.monitor { left: 230px; top: 30px; width: 640px; padding: 26px 30px 0; border-radius: 24px 24px 14px 14px; background: linear-gradient(#e6e0cc, #d2cbb4 55%, #bfb8a1);
+  box-shadow: inset 0 2px 0 rgba(255,255,255,.6), inset 0 -8px 14px rgba(0,0,0,.2), 0 22px 30px rgba(0,0,0,.55); }
+.moldura { padding: 10px; border-radius: 34px / 28px; background: #a39c85; box-shadow: inset 0 4px 10px rgba(0,0,0,.55), 0 1px 0 rgba(255,255,255,.5); }
+.tela { position: relative; width: 560px; height: 420px; overflow: hidden; background: #000; border-radius: 26px / 22px; box-shadow: inset 0 0 0 3px #000; }
+.tela.ligada { animation: ligar .7s ease-out; }
+@keyframes ligar { 0% { transform: scale(1, 0.01); filter: brightness(5); } 100% { transform: none; filter: none; } }
+.vidro { position: absolute; inset: 0; z-index: 5; pointer-events: none; border-radius: inherit;
+  background: linear-gradient(125deg, rgba(255,255,255,.14), transparent 32%), repeating-linear-gradient(transparent 0 2px, rgba(0,0,0,.16) 2px 3px);
+  box-shadow: inset 0 0 70px rgba(0,0,0,.65); }
+.queixo { height: 62px; display: flex; align-items: center; justify-content: space-between; padding: 0 14px; font: italic bold 14px Tahoma; color: #6d6753; }
+.botoesm { display: flex; align-items: center; gap: 14px; }
+.led { width: 8px; height: 8px; border-radius: 50%; background: #5a5; box-shadow: 0 0 6px #5f5; }
+.power { width: 26px; height: 26px; cursor: pointer; border: 3px solid #8d8670; border-radius: 50%; background: linear-gradient(#e8e2cf, #a9a28b); box-shadow: 0 2px 3px rgba(0,0,0,.4); }
+.power:hover { background: #fff6c8; }
+
+/* teclado, mouse, RAM, pizza, lata */
+.teclado { left: 250px; top: 610px; width: 600px; height: 96px; border-radius: 8px; background: linear-gradient(#e0dac6, #c9c2ab); box-shadow: 0 6px 0 #a39c86, 0 16px 18px rgba(0,0,0,.5); }
+.teclado:before { content: ""; position: absolute; inset: 9px; background: repeating-linear-gradient(90deg, transparent 0 28px, #b3ac96 28px 30px), repeating-linear-gradient(0deg, transparent 0 20px, #b3ac96 20px 22px), #ded8c4; border-radius: 4px; }
+.tapete { left: 880px; top: 596px; width: 130px; height: 120px; border-radius: 10px; background: linear-gradient(135deg, #2b3038, #1a1d22); box-shadow: 0 6px 8px rgba(0,0,0,.5); }
+.mouse { left: 925px; top: 622px; width: 42px; height: 68px; border-radius: 22px 22px 26px 26px / 26px 26px 34px 34px; background: linear-gradient(90deg, transparent 48%, #b3ac96 48% 52%, transparent 52%) 0 0 / 100% 34% no-repeat, linear-gradient(#e6e0cc, #c4bda6); box-shadow: 2px 5px 6px rgba(0,0,0,.5); }
+.ram { left: 40px; top: 548px; width: 210px; height: 46px; display: flex; gap: 8px; padding: 6px 10px 15px; background: linear-gradient(#27904a, #1b6e36); border-radius: 3px; transform: rotate(-6deg); }
+.ram span { flex: 1; background: linear-gradient(135deg, #3a3a3a, #111); border-radius: 2px; }
+.ram:after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 9px; background: repeating-linear-gradient(90deg, #e0b030 0 3px, #8a6a10 3px 4px); }
+.caixa { left: 36px; top: 612px; width: 200px; height: 110px; background: linear-gradient(#d8b078, #b88a50); border-radius: 4px; transform: rotate(3deg); box-shadow: 0 5px 0 #9a7040; }
+.pizza { position: absolute; left: 20px; top: 8px; width: 160px; height: 94px; border-radius: 50%; border: 9px solid #d9953d;
+  background: radial-gradient(circle at 25% 40%, #b3261e 0 8px, transparent 9px), radial-gradient(circle at 55% 30%, #b3261e 0 8px, transparent 9px), radial-gradient(circle at 70% 60%, #b3261e 0 8px, transparent 9px), radial-gradient(circle at 40% 68%, #b3261e 0 8px, transparent 9px), #f2c14e; }
+.lata { left: 120px; top: 440px; width: 54px; height: 104px; border-radius: 6px / 8px; background: linear-gradient(90deg, #8e1b1b, #e84040 30%, #ff9a9a 45%, #e84040 60%, #8e1b1b); }
+.lata:before { content: ""; position: absolute; left: 0; right: 0; top: -6px; height: 14px; border-radius: 50%; background: linear-gradient(#e8e8e8, #9a9a9a); }
+
+/* pinguim e puffle (estilo Club Penguin); tudo em "em", então o tamanho vem do font-size */
+.pg { position: absolute; width: 10em; height: 12em; border-radius: 50% 50% 46% 46% / 55% 55% 45% 45%;
+  background: radial-gradient(ellipse 80% 80% at 35% 25%, rgba(255,255,255,.35), transparent 60%), var(--c); box-shadow: inset -1em -1.2em 1.6em rgba(0,0,0,.35); }
+.pg i { position: absolute; display: block; }
+.ol { left: 1.6em; top: 3.2em; width: 3.2em; height: 3.6em; border-radius: 50%; background: radial-gradient(circle at 60% 55%, #000 0 .55em, #fff .6em); }
+.ol:after { content: ""; position: absolute; left: 3.4em; top: 0; width: 3.2em; height: 3.6em; border-radius: 50%; background: radial-gradient(circle at 40% 55%, #000 0 .55em, #fff .6em); }
+.bico { left: 3em; top: 6.3em; width: 4em; height: 2.2em; border-radius: 50% 50% 60% 60% / 40% 40% 70% 70%; background: linear-gradient(#ffb43c, #f07c00); }
+.pe { left: 1.4em; bottom: -.6em; width: 3em; height: 1.3em; border-radius: 50%; background: #f28a00; box-shadow: 4.4em 0 0 #f28a00; }
+.asa { inset: 0; }
+.asa:before, .asa:after { content: ""; position: absolute; top: 5em; width: 2.2em; height: 5em; border-radius: 50%; background: var(--c); filter: brightness(.78); }
+.asa:before { left: -1em; transform: rotate(14deg); }
+.asa:after { right: -1em; transform: rotate(-14deg); }
+.puf { position: absolute; display: inline-block; width: 5em; height: 4.6em; border-radius: 50% 50% 46% 46%;
+  background: radial-gradient(circle at 35% 30%, rgba(255,255,255,.45), transparent 55%), var(--c); box-shadow: inset -.5em -.6em .8em rgba(0,0,0,.3); }
+.puf:before { content: ""; position: absolute; left: 1.2em; top: 1.6em; width: .8em; height: .9em; border-radius: 50%; background: #111; box-shadow: 1.9em 0 0 #111; }
+.puf:after { content: ""; position: absolute; left: 2em; top: -.5em; width: 1.2em; height: 1em; border-radius: 50%; background: var(--c); }
+
+/* ================= WINDOWS XP ================= */
+.bliss { background: radial-gradient(ellipse 120% 60% at 15% 105%, #6fb53a 0 55%, transparent 56%), radial-gradient(ellipse 100% 50% at 95% 110%, #3d8a1c 0 55%, transparent 56%),
+  radial-gradient(ellipse 25% 8% at 25% 28%, rgba(255,255,255,.7), transparent), radial-gradient(ellipse 30% 9% at 70% 18%, rgba(255,255,255,.6), transparent), linear-gradient(#2a62d6, #7fb4f0 62%, #cfe6ff); }
+.area { display: none; position: absolute; inset: 0; }
+.titulo { display: flex; justify-content: space-between; align-items: center; height: 30px; padding: 0 4px 0 8px; color: #fff; font-weight: bold; font-size: 13px; text-shadow: 1px 1px #0a1c5a;
+  border-radius: 8px 8px 0 0; background: linear-gradient(#0a62f0, #2f8cff 12%, #0a58ea 45%, #0a50e0 85%, #0a3fc4); }
+.ico { display: inline-block; width: 16px; height: 16px; margin-right: 4px; border-radius: 3px; background: #1a8cff; border: 1px solid #fff; font: bold 12px/14px Tahoma; text-align: center; }
+.tb i, .fechar { display: inline-block; width: 22px; height: 22px; margin-left: 2px; padding: 0; border: 1px solid #fff; border-radius: 3px; background: linear-gradient(#6aa3f8, #2457d6); color: #fff; font: bold 13px/19px Tahoma; font-style: normal; text-align: center; }
+.tb .x, .fechar { background: linear-gradient(#ea8a70, #c3411f); cursor: pointer; }
+.ie { position: absolute; left: 5px; right: 5px; top: 5px; bottom: 30px; display: flex; flex-direction: column; overflow: hidden; background: #ece9d8; border: 3px solid #0a3fc4; border-top: 0; border-radius: 9px 9px 0 0; }
+.menu { padding: 3px 6px; font-size: 11px; border-bottom: 1px solid #aca899; }
+.end { display: flex; gap: 6px; align-items: center; padding: 3px 6px; font-size: 11px; border-bottom: 1px solid #aca899; }
+.end b { flex: 1; padding: 2px 6px; font-weight: normal; background: #fff; border: 1px solid #7f9db9; }
+.end em { font-style: normal; }
+.barra, .tarefas { display: flex; align-items: center; gap: 6px; color: #fff; font-size: 12px; background: linear-gradient(#3168d5, #2152c4 20%, #1e4fc0 85%, #1941a5); }
+.barra { position: absolute; left: 0; right: 0; bottom: 0; height: 27px; }
+.tarefas { position: fixed; left: 0; right: 0; bottom: 0; height: 34px; z-index: 40; }
+.iniciar { display: flex; align-items: center; height: 100%; padding: 0 16px; font-style: italic; font-size: 15px; text-shadow: 1px 1px 2px #000; border-radius: 0 14px 14px 0; background: linear-gradient(#58bb3e, #2a7d17); }
+.tarefa { padding: 4px 14px; border-radius: 3px; background: #3c81f3; box-shadow: inset 0 0 0 1px #1c4fb5; }
+.bandeja { margin-left: auto; height: 100%; padding: 0 10px; display: flex; align-items: center; background: #0f8ae8; border-left: 1px solid #0b5ec2; }
+
+/* página "Club Penguin" dentro do navegador da tela */
+.pagina { position: relative; flex: 1; overflow: hidden; background: linear-gradient(#59b6ff, #cdeeff 70%); }
+.pagina > * { position: absolute; }
+.monte { left: -30px; bottom: 40px; width: 300px; height: 130px; background: linear-gradient(135deg, #fff 0 22%, #9cc2e6 23% 60%, #7aa6d2); clip-path: polygon(0 100%, 45% 0, 100% 100%); }
+.m2 { left: 200px; width: 380px; height: 100px; }
+.neve { left: -20px; right: -20px; bottom: -30px; height: 90px; border-radius: 50%; background: radial-gradient(#fff, #e8f4ff); }
+.logo { left: 0; right: 0; top: 12px; margin: 0; text-align: center; font: bold 32px "Trebuchet MS", Verdana; color: #fff; -webkit-text-stroke: 2px #0a5fa8; paint-order: stroke fill; text-shadow: 0 4px 0 #0a5fa8; }
+.sub { left: 0; right: 0; top: 58px; margin: 0; text-align: center; color: #0a3d78; font-weight: bold; font-size: 14px; }
+.botoes { left: 0; right: 0; top: 92px; display: flex; justify-content: center; gap: 16px; }
+.btcp { padding: 10px 24px; font: bold 17px "Trebuchet MS", Verdana; color: #fff; text-shadow: 0 2px 0 #b45f00; cursor: pointer; border: 3px solid #fff; border-radius: 30px;
+  background: linear-gradient(#ffc24d, #ff8a00); box-shadow: 0 0 0 3px #0a5fa8, 0 6px 0 3px #b45f00; }
+.btcp:hover { background: linear-gradient(#ffd77a, #ffa01f); }
+.igloo { left: 16px; bottom: 22px; width: 110px; height: 70px; border-radius: 110px 110px 0 0; box-shadow: inset -8px -6px 10px rgba(80,130,180,.4);
+  background: repeating-linear-gradient(0deg, transparent 0 17px, rgba(120,170,210,.6) 17px 19px), radial-gradient(circle at 35% 30%, #fff, #cfe6f7); }
+.igloo:after { content: ""; position: absolute; left: 38px; bottom: 0; width: 34px; height: 30px; border-radius: 30px 30px 0 0; background: #1b3a5c; }
+.pinho { right: 18px; bottom: 34px; width: 56px; height: 90px; background: linear-gradient(#3d9142, #1b5e20); clip-path: polygon(50% 0, 80% 35%, 65% 35%, 95% 70%, 60% 70%, 60% 100%, 40% 100%, 40% 70%, 5% 70%, 35% 35%, 20% 35%); }
+.p2 { right: 70px; bottom: 28px; width: 40px; height: 64px; }
+
+/* janelas dos jogos (como se a tela do monitor ocupasse tudo) */
+.janela { display: none; position: fixed; inset: 0; z-index: 10; overflow: auto; padding: 14px 14px 50px; }
+.janela:after { content: ""; position: fixed; inset: 0; z-index: 50; pointer-events: none; background: repeating-linear-gradient(transparent 0 2px, rgba(0,0,0,.1) 2px 3px); box-shadow: inset 0 0 130px rgba(0,0,0,.65); }
+.xp { max-width: 1060px; margin: 0 auto; background: #ece9d8; border: 3px solid #0a3fc4; border-top: 0; border-radius: 10px 10px 4px 4px; box-shadow: 0 12px 40px rgba(0,0,0,.6); }
+.corpo { padding: 12px; }
+.topo { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; margin-bottom: 8px; }
+.botao { padding: 7px 16px; font-weight: bold; font-size: 14px; cursor: pointer; border: 1px solid #003c74; border-radius: 4px; background: linear-gradient(#fff, #ecebe5 85%, #d6d0c5); }
+.botao:hover { box-shadow: inset 0 0 0 2px #ffb83c; }
+.amarelo { background: linear-gradient(#fff7c2, #ffd84d); }
+
+/* cruzadinha */
+.lado { display: flex; flex-wrap: wrap; gap: 16px; align-items: flex-start; }
+#tabuleiro { --t: 30px; display: grid; grid-template-columns: repeat(16, var(--t)); }
+.vazio { width: var(--t); height: var(--t); }
+.casa { position: relative; width: var(--t); height: var(--t); background: #fff; border: 1px solid #1c3f6e; }
+.casa i { position: absolute; top: 0; left: 2px; font: bold 9px Tahoma; color: #c33; pointer-events: none; }
+.casa input { width: 100%; height: 100%; padding: 6px 0 0; border: 0; outline: none; background: transparent; text-align: center; font: bold 17px "Trebuchet MS", Tahoma; text-transform: uppercase; color: #123; }
+.casa input:focus { background: #fff3b0; }
+.casa.certa { background: #b6f0b0; }
+.casa.erro { background: #ffc4c4; }
+.pistas { flex: 1; min-width: 260px; max-height: 520px; overflow: auto; padding: 4px 12px; background: #fff; border: 2px inset #aaa; }
+.pistas h3 { margin: 8px 0; color: #0a58ea; }
+.pistas ul { margin: 0; padding: 0; list-style: none; }
+.pistas li { padding: 4px 2px; font-size: 14px; cursor: pointer; border-bottom: 1px dotted #bbb; }
+.pistas li:hover { background: #e8f2ff; }
+
+/* caça-respostas: palco com a arma em primeira pessoa (estilo Doom) */
+.palco { position: relative; height: 420px; overflow: hidden; cursor: crosshair; border: 3px inset #9ab; background: linear-gradient(#2f7fd6, #9ad0f5 60%, #d6efff); }
+.palco:before { content: ""; position: absolute; z-index: 0; left: 0; right: 0; bottom: 60px; height: 200px; background: linear-gradient(#eaf6ff, #9cc3e6 60%, #6d9ccb);
+  clip-path: polygon(0 100%, 0 60%, 12% 25%, 22% 55%, 36% 5%, 52% 50%, 64% 20%, 78% 55%, 90% 30%, 100% 60%, 100% 100%); }
+.palco:after { content: ""; position: absolute; z-index: 0; left: -10%; right: -10%; bottom: -40px; height: 130px; border-radius: 50%; background: radial-gradient(#fff, #dcecf9); }
+#alvos { position: absolute; inset: 0; z-index: 1; }
+.alvo { position: absolute; width: 190px; height: 44px; display: flex; align-items: center; gap: 8px; padding: 0 12px; white-space: nowrap; font: bold 15px "Trebuchet MS", Tahoma; background: #fff; border: 3px solid #0a5fa8; border-radius: 22px; box-shadow: 0 3px 0 rgba(0,0,0,.25); }
+.alvo .puf { position: relative; font-size: 5px; flex: none; }
+.alvo.certo { background: #b6f0b0; border-color: #2a7d17; }
+.alvo.errado { background: #ffc4c4; border-color: #c33; }
+.raio { display: none; position: absolute; inset: 0; z-index: 4; width: 100%; height: 100%; pointer-events: none; }
+.flash { display: none; position: absolute; z-index: 5; width: 36px; height: 36px; border-radius: 50%; pointer-events: none; background: radial-gradient(#fff, #ff2fd2 50%, transparent 70%); }
+.arma { position: absolute; z-index: 3; left: 50%; bottom: 0; width: 240px; height: 190px; margin-left: -120px; pointer-events: none; }
+.arma.tiro { transform: translateY(10px); }
+.arma i { position: absolute; display: block; }
+.braco { bottom: -30px; width: 70px; height: 130px; border-radius: 14px 14px 0 0; background: linear-gradient(90deg, #1b2f5c, #3563b8 50%, #1b2f5c); }
+.braco.e { left: 28px; transform: rotate(14deg); }
+.braco.d { right: 28px; transform: rotate(-14deg); }
+.corpoarma { left: 86px; bottom: 30px; width: 68px; height: 90px; border-radius: 10px; background: linear-gradient(90deg, #222733, #4a5264 45%, #1b1f29); box-shadow: inset 0 0 0 2px #0d1017; }
+.corpoarma:after { content: ""; position: absolute; left: 28px; top: 10px; width: 12px; height: 40px; border-radius: 6px; background: #3ee6ff; box-shadow: 0 0 8px #3ee6ff; }
+.cano { left: 101px; bottom: 100px; width: 38px; height: 82px; border-radius: 10px 10px 4px 4px; background: linear-gradient(90deg, #3a3f4a, #cfd6e0 40%, #5a6170 70%, #2a2e36); }
+.mao { width: 58px; height: 52px; bottom: 60px; border-radius: 50% 50% 40% 40%; background: radial-gradient(circle at 40% 30%, #f2c9a0, #d19a6e); }
+.mao.e { left: 52px; }
+.mao.d { right: 52px; }
+.ponta { left: 104px; bottom: 170px; width: 32px; height: 32px; border-radius: 50%; background: radial-gradient(#fff, #ff2fd2 45%, transparent 70%); }
+.arma.tiro .ponta { box-shadow: 0 0 30px 14px #ff2fd2; }
+.pergunta { min-height: 66px; margin: 10px 0; padding: 12px; font-size: 16px; background: #fffbe0; border: 2px solid #ff9a1f; border-radius: 10px; }
+
+@media (max-width: 600px) {
+  #tabuleiro { --t: 19px; }
+  .casa input { padding-top: 3px; font-size: 12px; }
+  .casa i { font-size: 7px; }
+}
+@media (prefers-reduced-motion: reduce) { * { animation: none !important; } }
