@@ -1,7 +1,7 @@
 // ================= DADOS (as 16 palavras do PDF) =================
 // n = número da pista | l = linha onde começa | c = coluna onde começa
 // d = "H" (horizontal) ou "V" (vertical) | r = resposta | nome = como aparece no jogo de tiro
-var palavras = [
+let palavras = [
   { n: 1,  l: 0,  c: 6,  d: "V", r: "QUADCORE", nome: "Quad core", pista: "Processador com quatro núcleos que trabalham ao mesmo tempo no mesmo chip." },
   { n: 2,  l: 1,  c: 2,  d: "H", r: "DMA", nome: "DMA", pista: "Controlador que move dados entre periféricos e memória sem ocupar o processador." },
   { n: 3,  l: 1,  c: 3,  d: "V", r: "MEMORIADEMASSA", nome: "Memória de massa", pista: "Guarda programas e arquivos de forma permanente e em grande volume, como HD e SSD." },
@@ -21,7 +21,7 @@ var palavras = [
 ];
 
 // ================= DICAS EXTRAS (botão Dica da cruzadinha), na MESMA ORDEM do vetor palavras =================
-var dicas = [
+let dicas = [
   "Tem o dobro de núcleos do processador da palavra 11 horizontal.",
   "Alivia o processador: ele só autoriza a transferência e fica livre para outras tarefas.",
   "O que está guardado continua lá com o computador desligado, e é a maior memória da máquina.",
@@ -41,27 +41,27 @@ var dicas = [
 ];
 
 // ================= SOM (tudo feito por código, sem arquivos de áudio) =================
-var audio = null;      // AudioContext = "motor de som" do navegador; só pode ser criado depois de um clique
-var somLigado = true;
-var ligado = false;    // o monitor está ligado?
-var musicas = {
+let audio = null;      // AudioContext = "motor de som" do navegador; só pode ser criado depois de um clique
+let somLigado = true;
+let ligado = false;    // o monitor está ligado?
+let musicas = {
   // cada música tem: tempo (ms entre as notas), melodia e baixo (números = frequência da nota, 0 = silêncio)
   menu: { tempo: 450, melodia: [523,659,784,659,587,784,659,0, 523,659,880,784,659,587,523,0], baixo: [262,0,0,0,196,0,0,0, 220,0,0,0,175,0,196,0] },
   cruz: { tempo: 600, melodia: [392,0,523,0,659,0,523,0, 440,0,523,0,587,0,523,0], baixo: [196,0,0,0,0,0,0,0, 175,0,0,0,0,0,0,0] },
   jogo: { tempo: 240, melodia: [523,659,784,659, 880,784,659,523, 587,698,880,698, 784,659,587,0], baixo: [262,0,262,0,262,0,262,0, 175,0,175,0,196,0,196,0] }
 };
-var musicaAtual = "menu";
-var passo = 0;
-var timerMusica = null;
+let musicaAtual = "menu";
+let passo = 0;
+let timerMusica = null;
 
 // toca uma nota: freq = frequência, dur = duração (s), tipo = formato da onda, vol = volume, atraso = espera (s)
 function tom(freq, dur, tipo, vol, atraso) {
   if (audio == null || somLigado == false || freq == 0) { return; }
-  var osc = audio.createOscillator();   // oscillator = gerador de som
-  var ganho = audio.createGain();       // gain = controle de volume
+  let osc = audio.createOscillator();   // oscillator = gerador de som
+  let ganho = audio.createGain();       // gain = controle de volume
   osc.type = tipo;
   osc.frequency.value = freq;
-  var t = audio.currentTime + atraso;
+  let t = audio.currentTime + atraso;
   ganho.gain.setValueAtTime(vol, t);
   ganho.gain.exponentialRampToValueAtTime(0.0001, t + dur);   // volume vai caindo até sumir
   osc.connect(ganho);
@@ -78,7 +78,7 @@ function tocar(nome) {
 }
 
 function passoMusica() {
-  var m = musicas[musicaAtual];
+  let m = musicas[musicaAtual];
   tom(m.melodia[passo], 0.35, "triangle", 0.12, 0);
   tom(m.baixo[passo], 0.4, "sine", 0.1, 0);
   passo++;
@@ -93,12 +93,12 @@ function sfxJanela() { tom(523, 0.12, "triangle", 0.12, 0); tom(784, 0.2, "trian
 // "piu piu" do laser: duas notas que começam agudas e descem rápido
 function sfxPiu() {
   if (audio == null || somLigado == false) { return; }
-  var tipos = ["square", "triangle"];
-  var volumes = [0.18, 0.25];
-  var t = audio.currentTime;
-  for (var i = 0; i < 2; i++) {
-    var osc = audio.createOscillator();
-    var ganho = audio.createGain();
+  let tipos = ["square", "triangle"];
+  let volumes = [0.18, 0.25];
+  let t = audio.currentTime;
+  for (let i = 0; i < 2; i++) {
+    let osc = audio.createOscillator();
+    let ganho = audio.createGain();
     osc.type = tipos[i];
     osc.frequency.setValueAtTime(2200 - i * 900, t);
     osc.frequency.exponentialRampToValueAtTime(180, t + 0.25);   // a nota desce de 2200 para 180
@@ -133,8 +133,8 @@ function ligar() {
   document.getElementById("area").style.display = "block";
   document.getElementById("dica").innerHTML = "Escolha um jogo no navegador da tela do monitor 🖱️";
   // som de "Windows ligando": notas subindo uma depois da outra
-  var notas = [392, 523, 659, 784];
-  for (var i = 0; i < notas.length; i++) {
+  let notas = [392, 523, 659, 784];
+  for (let i = 0; i < notas.length; i++) {
     tom(notas[i], 0.7, "triangle", 0.15, i * 0.18);
   }
   tocar("menu");
@@ -166,37 +166,37 @@ function voltar() {
 }
 
 function atualizarRelogio() {
-  var d = new Date();
-  var m = d.getMinutes();
+  let d = new Date();
+  let m = d.getMinutes();
   if (m < 10) { m = "0" + m; }
   document.getElementById("relogio").innerHTML = d.getHours() + ":" + m;
 }
 
 // ================= CRUZADINHA =================
-var TAM = 16;          // o tabuleiro tem 16 linhas x 16 colunas
-var letras = [];       // letras[l][c] = letra certa da casa ("" = casa vazia)
-var numeros = [];      // numeros[l][c] = número da pista que começa nessa casa (0 = nenhum)
-var dirCasa = [];      // dirCasa[l][c] = "H", "V" ou "HV" (quais palavras passam pela casa)
-var focoL = -1;       // linha e coluna da casa onde o cursor está (usado pelo botão Dica)
-var focoC = -1;
-var dicasUsadas = 0;
-var direcao = "H";     // direção em que o cursor avança ao digitar
+let TAM = 16;          // o tabuleiro tem 16 linhas x 16 colunas
+let letras = [];       // letras[l][c] = letra certa da casa ("" = casa vazia)
+let numeros = [];      // numeros[l][c] = número da pista que começa nessa casa (0 = nenhum)
+let dirCasa = [];      // dirCasa[l][c] = "H", "V" ou "HV" (quais palavras passam pela casa)
+let focoL = -1;       // linha e coluna da casa onde o cursor está (usado pelo botão Dica)
+let focoC = -1;
+let dicasUsadas = 0;
+let direcao = "H";     // direção em que o cursor avança ao digitar
 
 // descobre a linha e a coluna da letra número k da palavra p
 function linhaDe(p, k) { if (p.d == "V") { return p.l + k; } return p.l; }
 function colunaDe(p, k) { if (p.d == "H") { return p.c + k; } return p.c; }
 
 function montarDados() {
-  for (var l = 0; l < TAM; l++) {
+  for (let l = 0; l < TAM; l++) {
     letras[l] = []; numeros[l] = []; dirCasa[l] = [];
-    for (var c = 0; c < TAM; c++) { letras[l][c] = ""; numeros[l][c] = 0; dirCasa[l][c] = ""; }
+    for (let c = 0; c < TAM; c++) { letras[l][c] = ""; numeros[l][c] = 0; dirCasa[l][c] = ""; }
   }
-  for (var i = 0; i < palavras.length; i++) {
-    var p = palavras[i];
+  for (let i = 0; i < palavras.length; i++) {
+    let p = palavras[i];
     numeros[p.l][p.c] = p.n;
-    for (var k = 0; k < p.r.length; k++) {
-      var l2 = linhaDe(p, k);
-      var c2 = colunaDe(p, k);
+    for (let k = 0; k < p.r.length; k++) {
+      let l2 = linhaDe(p, k);
+      let c2 = colunaDe(p, k);
       letras[l2][c2] = p.r.charAt(k);              // charAt(k) pega a letra na posição k da palavra
       dirCasa[l2][c2] = dirCasa[l2][c2] + p.d;
     }
@@ -204,9 +204,9 @@ function montarDados() {
 }
 
 function desenharTabuleiro() {
-  var html = "";
-  for (var l = 0; l < TAM; l++) {
-    for (var c = 0; c < TAM; c++) {
+  let html = "";
+  for (let l = 0; l < TAM; l++) {
+    for (let c = 0; c < TAM; c++) {
       if (letras[l][c] == "") {
         html += '<div class="vazio"></div>';
       } else {
@@ -222,11 +222,11 @@ function desenharTabuleiro() {
 }
 
 function desenharPistas() {
-  var h = "";
-  var v = "";
-  for (var i = 0; i < palavras.length; i++) {
-    var p = palavras[i];
-    var item = '<li onclick="irPista(' + i + ')"><b>' + p.n + '.</b> ' + p.pista + ' (' + p.r.length + ' letras) <span id="marca_' + i + '"></span></li>';
+  let h = "";
+  let v = "";
+  for (let i = 0; i < palavras.length; i++) {
+    let p = palavras[i];
+    let item = '<li onclick="irPista(' + i + ')"><b>' + p.n + '.</b> ' + p.pista + ' (' + p.r.length + ' letras) <span id="marca_' + i + '"></span></li>';
     if (p.d == "H") { h += item; } else { v += item; }
   }
   document.getElementById("listaH").innerHTML = h;
@@ -248,8 +248,8 @@ function focou(l, c) {
 }
 
 function digitou(l, c) {
-  var campo = document.getElementById("in_" + l + "_" + c);
-  var v = campo.value.toUpperCase();
+  let campo = document.getElementById("in_" + l + "_" + c);
+  let v = campo.value.toUpperCase();
   if (v < "A" || v > "Z") { v = ""; }      // só aceita letras de A até Z
   campo.value = v;
   if (v != "") {
@@ -259,7 +259,7 @@ function digitou(l, c) {
 }
 
 function tecla(e, l, c) {
-  var campo = document.getElementById("in_" + l + "_" + c);
+  let campo = document.getElementById("in_" + l + "_" + c);
   if (e.key == "Backspace" && campo.value == "") {
     if (direcao == "H") { irPara(l, c - 1); } else { irPara(l - 1, c); }
   }
@@ -277,9 +277,9 @@ function irPista(i) {
 
 // junta as letras digitadas de uma palavra
 function lerPalavra(p) {
-  var texto = "";
-  for (var k = 0; k < p.r.length; k++) {
-    var valor = document.getElementById("in_" + linhaDe(p, k) + "_" + colunaDe(p, k)).value;
+  let texto = "";
+  for (let k = 0; k < p.r.length; k++) {
+    let valor = document.getElementById("in_" + linhaDe(p, k) + "_" + colunaDe(p, k)).value;
     if (valor == "") { valor = "_"; }
     texto += valor;
   }
@@ -287,24 +287,24 @@ function lerPalavra(p) {
 }
 
 function pintarPalavra(p, classe) {
-  for (var k = 0; k < p.r.length; k++) {
+  for (let k = 0; k < p.r.length; k++) {
     document.getElementById("casa_" + linhaDe(p, k) + "_" + colunaDe(p, k)).className = classe;
   }
 }
 
 function limparCores() {
-  for (var l = 0; l < TAM; l++) {
-    for (var c = 0; c < TAM; c++) {
+  for (let l = 0; l < TAM; l++) {
+    for (let c = 0; c < TAM; c++) {
       if (letras[l][c] != "") { document.getElementById("casa_" + l + "_" + c).className = "casa"; }
     }
   }
 }
 
 function conferir() {
-  var certas = 0;
-  var acertou = [];
+  let certas = 0;
+  let acertou = [];
   limparCores();
-  for (var i = 0; i < palavras.length; i++) {
+  for (let i = 0; i < palavras.length; i++) {
     acertou[i] = (lerPalavra(palavras[i]) == palavras[i].r);
     if (acertou[i] == true) { certas++; }
   }
@@ -333,13 +333,13 @@ function conferir() {
 
 function reiniciar() {
   sfxClique();
-  for (var l = 0; l < TAM; l++) {
-    for (var c = 0; c < TAM; c++) {
+  for (let l = 0; l < TAM; l++) {
+    for (let c = 0; c < TAM; c++) {
       if (letras[l][c] != "") { document.getElementById("in_" + l + "_" + c).value = ""; }
     }
   }
   limparCores();
-  for (var i = 0; i < palavras.length; i++) { document.getElementById("marca_" + i).innerHTML = ""; }
+  for (let i = 0; i < palavras.length; i++) { document.getElementById("marca_" + i).innerHTML = ""; }
   document.getElementById("contador").innerHTML = "0 de " + palavras.length + " palavras";
   document.getElementById("msgCruz").innerHTML = "Tabuleiro limpo. Boa sorte!";
   dicasUsadas = 0;
@@ -353,15 +353,15 @@ function pedirDica() {
     return;
   }
   // procura a palavra que passa pela casa onde o cursor está (prefere a direção atual)
-  var achou = -1;
-  for (var i = 0; i < palavras.length; i++) {
-    for (var k = 0; k < palavras[i].r.length; k++) {
+  let achou = -1;
+  for (let i = 0; i < palavras.length; i++) {
+    for (let k = 0; k < palavras[i].r.length; k++) {
       if (linhaDe(palavras[i], k) == focoL && colunaDe(palavras[i], k) == focoC) {
         if (palavras[i].d == direcao) { achou = i; } else if (achou == -1) { achou = i; }
       }
     }
   }
-  var nomeDir = "vertical";
+  let nomeDir = "vertical";
   if (palavras[achou].d == "H") { nomeDir = "horizontal"; }
   dicasUsadas++;
   tom(880, 0.1, "sine", 0.12, 0);
@@ -370,23 +370,23 @@ function pedirDica() {
 }
 
 // ================= CAÇA-RESPOSTAS (estilo Duck Hunt + Doom) =================
-var jogando = false;
-var travado = true;          // true = já atirou nessa pergunta, espera a próxima
-var perguntas = [];          // ordem embaralhada das palavras
-var qAtual = 0;
-var acertos = 0;
-var alvoX = [];              // posição horizontal de cada resposta que se move
-var alvoDir = [];            // 1 = vai para a direita, -1 = vai para a esquerda
-var alvoNome = [];           // qual palavra (posição no vetor palavras) cada alvo representa
-var cores = ["#e63946", "#ff9a1f", "#8a4fd6", "#2ec4b6", "#f4d03f"];   // cor do puffle de cada alvo
-var VELOCIDADE = 1.2;        // pixels por passo (a cada 30 ms): devagar para dar para ler
-var LARGURA_ALVO = 190;
-var timerAlvos = null;
+let jogando = false;
+let travado = true;          // true = já atirou nessa pergunta, espera a próxima
+let perguntas = [];          // ordem embaralhada das palavras
+let qAtual = 0;
+let acertos = 0;
+let alvoX = [];              // posição horizontal de cada resposta que se move
+let alvoDir = [];            // 1 = vai para a direita, -1 = vai para a esquerda
+let alvoNome = [];           // qual palavra (posição no vetor palavras) cada alvo representa
+let cores = ["#e63946", "#ff9a1f", "#8a4fd6", "#2ec4b6", "#f4d03f"];   // cor do puffle de cada alvo
+let VELOCIDADE = 1.2;        // pixels por passo (a cada 30 ms): devagar para dar para ler
+let LARGURA_ALVO = 190;
+let timerAlvos = null;
 
 function embaralhar(vetor) {
-  for (var i = vetor.length - 1; i > 0; i--) {
-    var j = Math.floor(Math.random() * (i + 1));   // Math.random() sorteia 0 a 1; Math.floor arredonda para baixo
-    var guardado = vetor[i];
+  for (let i = vetor.length - 1; i > 0; i--) {
+    let j = Math.floor(Math.random() * (i + 1));   // Math.random() sorteia 0 a 1; Math.floor arredonda para baixo
+    let guardado = vetor[i];
     vetor[i] = vetor[j];
     vetor[j] = guardado;
   }
@@ -395,7 +395,7 @@ function embaralhar(vetor) {
 function comecarJogo() {
   sfxClique();
   perguntas = [];
-  for (var i = 0; i < palavras.length; i++) { perguntas[i] = i; }
+  for (let i = 0; i < palavras.length; i++) { perguntas[i] = i; }
   embaralhar(perguntas);
   qAtual = 0;
   acertos = 0;
@@ -406,7 +406,7 @@ function comecarJogo() {
 }
 
 function atualizarPlacar() {
-  var numero = qAtual + 1;
+  let numero = qAtual + 1;
   if (numero > palavras.length) { numero = palavras.length; }
   document.getElementById("placar").innerHTML = "Pergunta " + numero + " de " + palavras.length + " · Acertos: " + acertos;
 }
@@ -423,20 +423,20 @@ function proximaPergunta() {
     sfxAcerto();
     return;
   }
-  var certa = perguntas[qAtual];
+  let certa = perguntas[qAtual];
   // sorteia 4 respostas erradas diferentes e junta com a certa
-  var opcoes = [certa];
+  let opcoes = [certa];
   while (opcoes.length < 5) {
-    var s = Math.floor(Math.random() * palavras.length);
-    var jaTem = false;
-    for (var k = 0; k < opcoes.length; k++) {
+    let s = Math.floor(Math.random() * palavras.length);
+    let jaTem = false;
+    for (let k = 0; k < opcoes.length; k++) {
       if (opcoes[k] == s) { jaTem = true; }
     }
     if (jaTem == false) { opcoes.push(s); }
   }
   embaralhar(opcoes);
-  var html = "";
-  for (var i = 0; i < 5; i++) {
+  let html = "";
+  for (let i = 0; i < 5; i++) {
     alvoNome[i] = opcoes[i];
     alvoX[i] = i * 120;
     if (i % 2 == 0) { alvoDir[i] = 1; } else { alvoDir[i] = -1; }   // % = resto da divisão (par/ímpar)
@@ -452,9 +452,9 @@ function proximaPergunta() {
 // as respostas quicam: ao encostar numa lateral do palco, voltam para o outro lado
 function moverAlvos() {
   if (jogando == false) { return; }
-  var limite = document.getElementById("palco").offsetWidth - LARGURA_ALVO - 6;
-  for (var i = 0; i < 5; i++) {
-    var el = document.getElementById("alvo" + i);
+  let limite = document.getElementById("palco").offsetWidth - LARGURA_ALVO - 6;
+  for (let i = 0; i < 5; i++) {
+    let el = document.getElementById("alvo" + i);
     if (el != null) {
       alvoX[i] = alvoX[i] + VELOCIDADE * alvoDir[i];
       if (alvoX[i] >= limite) { alvoX[i] = limite; alvoDir[i] = -1; }
@@ -473,22 +473,22 @@ function apagarRaio() {
 // roda a cada clique no palco: o laser sai da ponta da arma (embaixo, no meio) até o ponto clicado
 function mirar(e) {
   if (audio != null && audio.state == "suspended") { audio.resume(); }
-  var palco = document.getElementById("palco");
-  var ret = palco.getBoundingClientRect();           // posição do palco na tela
-  var x = e.clientX - ret.left;                       // onde o mouse clicou dentro do palco
-  var y = e.clientY - ret.top;
-  var x0 = palco.offsetWidth / 2;                     // ponta da arma
-  var y0 = palco.offsetHeight - 186;
-  var nomes = ["linhaA", "linhaB"];
-  for (var i = 0; i < 2; i++) {
-    var linha = document.getElementById(nomes[i]);
+  let palco = document.getElementById("palco");
+  let ret = palco.getBoundingClientRect();           // posição do palco na tela
+  let x = e.clientX - ret.left;                       // onde o mouse clicou dentro do palco
+  let y = e.clientY - ret.top;
+  let x0 = palco.offsetWidth / 2;                     // ponta da arma
+  let y0 = palco.offsetHeight - 186;
+  let nomes = ["linhaA", "linhaB"];
+  for (let i = 0; i < 2; i++) {
+    let linha = document.getElementById(nomes[i]);
     linha.setAttribute("x1", x0);                     // setAttribute muda os números da linha desenhada (SVG)
     linha.setAttribute("y1", y0);
     linha.setAttribute("x2", x);
     linha.setAttribute("y2", y);
   }
   document.getElementById("raio").style.display = "block";
-  var flash = document.getElementById("flash");
+  let flash = document.getElementById("flash");
   flash.style.left = (x - 18) + "px";
   flash.style.top = (y - 18) + "px";
   flash.style.display = "block";
@@ -501,8 +501,8 @@ function mirar(e) {
 function atirar(i) {
   if (travado == true || jogando == false) { return; }
   travado = true;
-  var certa = perguntas[qAtual];
-  var texto = "";
+  let certa = perguntas[qAtual];
+  let texto = "";
   if (alvoNome[i] == certa) {
     acertos++;
     texto = "✅ Acertou! ";
@@ -511,7 +511,7 @@ function atirar(i) {
   } else {
     texto = "❌ Errou! A resposta era <b>" + palavras[certa].nome + "</b>. ";
     document.getElementById("alvo" + i).className = "alvo errado";
-    for (var k = 0; k < 5; k++) {
+    for (let k = 0; k < 5; k++) {
       if (alvoNome[k] == certa) { document.getElementById("alvo" + k).className = "alvo certo"; }
     }
     sfxErro();
@@ -525,7 +525,7 @@ function atirar(i) {
 // ================= AJUSTE DA MESA E INÍCIO =================
 // a mesa tem 1100px de largura; em telas menores o zoom diminui tudo junto, mantendo as proporções
 function ajustarMesa() {
-  var escala = window.innerWidth / 1100;
+  let escala = window.innerWidth / 1100;
   if (escala > 1) { escala = 1; }
   document.getElementById("cena").style.zoom = escala;
 }
